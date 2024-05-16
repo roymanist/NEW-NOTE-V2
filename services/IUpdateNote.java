@@ -33,8 +33,9 @@ public interface IUpdateNote {
         return notebook;
     }
 
-    public default List<Note> UpdateNoteName(Connection connection, List<Note> notebook, String changeNameNote, int idNote) throws SQLException {
+    public default List<Note> UpdateNoteName(List<Note> notebook, String changeNameNote, int idNote) throws SQLException {
 
+        Connection connection = NoteManager.connection;
         Statement SQL = connection.createStatement();
 
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -56,8 +57,9 @@ public interface IUpdateNote {
         return notebook;
     }
 
-    public default List<Note> UpdateNoteText(Connection connection, List<Note> notebook, String changeTextNote, int idNote) throws SQLException {
+    public default List<Note> UpdateNoteText(List<Note> notebook, String changeTextNote, int idNote) throws SQLException {
 
+        Connection connection = NoteManager.connection;
         Statement SQL = connection.createStatement();
 
         LocalDateTime currentDateTime = LocalDateTime.now();
