@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote {
+
+public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDeleteNote, IUpdateNote {
 
 }

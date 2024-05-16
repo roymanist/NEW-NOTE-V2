@@ -16,12 +16,15 @@ public class Main {
 
         List<Note> notebook = manager.ReadNoteBase(connection);
 
-     //  notebook = manager.NewNote(connection,"try","hello hard world22", notebook);
+        // notebook = manager.NewNote(connection,"Second","New Note 2", notebook);
 
+        // notebook = manager.DeleteNote(connection, notebook,9);
 
         manager.DrawNotes(notebook);
-for (Note x : notebook){System.out.println(x.getNameNote());
-    System.out.println(x.getNameNote().length());
-}
+manager.UpdateNoteNameAndText(connection, notebook, "YYYY", "ZZZZZZZZZZZ",1);
+        manager.DrawNotes(notebook);
+
+        //  manager.DrawNotes(notebook);
+
     }
 }
