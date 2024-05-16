@@ -10,19 +10,20 @@ public class Main {
         // Ваш код начинается здесь
 
         Connection connection = DriverManager.getConnection("jdbc:h2:./dbase/NoteDBase");
-       /* Statement SQL = connection.createStatement();
-        SQL.execute("delete from notes where id >1");*/
         NoteManager manager = new NoteManager();
 
         List<Note> notebook = manager.ReadNoteBase(connection);
 
+         manager.DrawNotes(notebook);
         // notebook = manager.NewNote(connection,"Second","New Note 2", notebook);
+        // manager.DrawNotes(notebook);
 
-        // notebook = manager.DeleteNote(connection, notebook,9);
+        // notebook = manager.DeleteNote(connection, notebook,10);
 
-        manager.DrawNotes(notebook);
-manager.UpdateNoteNameAndText(connection, notebook, "YYYY", "ZZZZZZZZZZZ",1);
-        manager.DrawNotes(notebook);
+        //
+        //manager.UpdateNoteNameAndText(connection, notebook, "YYYY", "ZZZZZZZZZZZ",1);
+        //manager.UpdateNoteName(connection,notebook,"TestNote",1);
+        //manager.DrawNotes(notebook);
 
         //  manager.DrawNotes(notebook);
 

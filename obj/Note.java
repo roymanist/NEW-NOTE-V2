@@ -3,11 +3,10 @@ package obj;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Note
-{
+public class Note {
     @Getter
     @Setter
-    private int id=0;
+    private int id = 0;
     @Getter
     @Setter
     private int height = 5;
@@ -19,11 +18,11 @@ public class Note
     private String nameNote = "";
     @Getter
     @Setter
-    private String textNote  = "";
+    private String textNote = "";
     @Getter
     @Setter
     private String dtCreate = "";
     @Getter
     @Setter
-    private String dtChange  = "";
+    private String dtChange = "";
 }

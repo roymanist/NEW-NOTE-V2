@@ -1,0 +1,7 @@
+2024-05-16 15:05:41.864792+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Объект уже закрыт
+The object is already closed [90007-224]
+2024-05-16 15:11:54.635305+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "delete [*]* from notes where id >1"; ожидалось "identifier"
+Syntax error in SQL statement "delete [*]* from notes where id >1"; expected "identifier"; SQL statement:
+delete * from notes where id >1 [42001-224]
