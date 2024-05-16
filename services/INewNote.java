@@ -10,8 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface INewNote {
-    public default List<Note> NewNote(Connection connection, String noteName, String noteText, List<Note> notebook) throws SQLException {
+    public default List<Note> NewNote( String noteName, String noteText, List<Note> notebook) throws SQLException {
 
+        Connection connection = NoteManager.connection;
         Statement SQL = connection.createStatement();
         LocalDateTime currentDateTime = LocalDateTime.now();
         // Создание объекта форматтера
@@ -20,8 +21,8 @@ public interface INewNote {
         String dt = currentDateTime.format(formatter);
 
 
-        SQL.execute("INSERT INTO notes ( textNote, dtCreate, dtChange, nameNote) SELECT " + "'" + noteText + "'" + ", " + "'" + dt + "'" + ", " + "'" + dt + "', '" + noteName + "'");
+        SQL.execute("INSERT INTO notes ( textNote, dtCreate, dtChange, nameNote) SELECT " + "'" + noteText + "', " + "'" + dt + "'" + ", " + "'" + dt + "', '" + noteName + "'");
         NoteManager manager = new NoteManager();
-        return notebook = manager.ReadNoteBase(connection);
+        return notebook = manager.ReadNoteBase();
     }
 }

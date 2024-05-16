@@ -7,8 +7,9 @@ import java.util.List;
 import obj.Note;
 
 public interface IReadNoteBase {
-    public default List<Note> ReadNoteBase(Connection connection) throws SQLException {
+    public default List<Note> ReadNoteBase() throws SQLException {
 
+        Connection connection = NoteManager.connection;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM notes");
         List<Note> allNotes = new ArrayList<>();

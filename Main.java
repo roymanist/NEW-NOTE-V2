@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import services.*;
@@ -9,20 +8,20 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         // Ваш код начинается здесь
 
-        Connection connection = DriverManager.getConnection("jdbc:h2:./dbase/NoteDBase");
+       // Connection connection = DriverManager.getConnection("jdbc:h2:./dbase/NoteDBase");
         NoteManager manager = new NoteManager();
 
-        List<Note> notebook = manager.ReadNoteBase(connection);
+        List<Note> notebook = manager.ReadNoteBase();
 
          manager.DrawNotes(notebook);
-        // notebook = manager.NewNote(connection,"Second","New Note 2", notebook);
+        // notebook = manager.NewNote("Three","New Note 3", notebook);
         // manager.DrawNotes(notebook);
 
-        // notebook = manager.DeleteNote(connection, notebook,10);
-
+         //notebook = manager.DeleteNote(notebook,12);
+        //manager.DrawNotes(notebook);
         //
-        //manager.UpdateNoteNameAndText(connection, notebook, "YYYY", "ZZZZZZZZZZZ",1);
-        //manager.UpdateNoteName(connection,notebook,"TestNote",1);
+        //manager.UpdateNoteNameAndText( notebook, "YYYY", "ZZZZZZZZZZZ",1);
+        //manager.UpdateNoteName(notebook,"TestNote",1);
         //manager.DrawNotes(notebook);
 
         //  manager.DrawNotes(notebook);

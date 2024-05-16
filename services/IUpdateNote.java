@@ -8,8 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface IUpdateNote {
-    public default List<Note> UpdateNoteNameAndText(Connection connection, List<Note> notebook, String changeNameNote, String changeTextNote, int idNote) throws SQLException {
+    public default List<Note> UpdateNoteNameAndText(List<Note> notebook, String changeNameNote, String changeTextNote, int idNote) throws SQLException {
 
+        Connection connection = NoteManager.connection;
         Statement SQL = connection.createStatement();
 
         LocalDateTime currentDateTime = LocalDateTime.now();
