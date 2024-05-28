@@ -8,12 +8,23 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         // Ваш код начинается здесь
 
-       // Connection connection = DriverManager.getConnection("jdbc:h2:./dbase/NoteDBase");
-        NoteManager manager = new NoteManager();
+NoteManager manager = NoteManager.getNoteData();
 
-        List<Note> notebook = manager.ReadNoteBase();
+manager.DrawNotes();
 
-         manager.DrawNotes(notebook);
+       //Connection connection = DriverManager.getConnection("jdbc:h2:E:/JAVA_LRN/II/PROJ/src/main/java/dbase/NoteDBaseNew");
+
+
+     /*   for(Note note : manager.getNotebook())
+        {
+            System.out.print(note.getId());
+            System.out.println(note.getNameNote());
+            System.out.println(note.getTextNote());
+        }
+*/
+
+
+
         // notebook = manager.NewNote("Three","New Note 3", notebook);
         // manager.DrawNotes(notebook);
 
