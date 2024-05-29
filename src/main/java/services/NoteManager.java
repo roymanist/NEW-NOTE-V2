@@ -1,4 +1,6 @@
 package services;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -7,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import obj.Note;
+
 @Data
-public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDeleteNote, IUpdateNote {
+public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDeleteNote, IUpdateNote, GetURLDBase {
 
     private static NoteManager instance;
     private static final Object lock = new Object();/// не сильно понял этот локер. по теории он блочит создание дубля в многопоточности
@@ -16,10 +19,15 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
     private Connection connection;
     private List<Note> notebook;
 
+
     private NoteManager() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:E:/JAVA_LRN/II/PROJ/NEW-NOTE-V2/src/main/java/dbase/NoteDBase");
+       // connection = DriverManager.getConnection("jdbc:h2:E:/JAVA_LRN/II/PROJ/NEW-NOTE-V2/src/main/java/dbase/NoteDBase");
+        connection = DriverManager.getConnection(GetURL());
         notebook = new ArrayList<>();
         ReadNoteBase();
+
+
+
     }//приватный конструктор
 
     public static NoteManager getNoteData() throws SQLException {
@@ -58,23 +66,12 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
     }
 
 
-    public void NewNote(String noteName, String noteText, List<Note> notebook) throws SQLException {
+    /**
+     *
+     * @param type - enum of interface IUpdateNote. Use like IUpdateNote.upd.{...}
+     */
 
-
-        Statement SQL = connection.createStatement();
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        // Создание объекта форматтера
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // Применение форматирования к текущей дате и времени
-        String dt = currentDateTime.format(formatter);
-
-
-        SQL.execute("INSERT INTO notes ( textNote, dtCreate, dtChange, nameNote) SELECT " + "'" + noteText + "', " + "'" + dt + "'" + ", " + "'" + dt + "', '" + noteName + "'");
-        NoteManager manager = new NoteManager();
-
-    }
-
-    public void UpdateNoteNameAndText(List<Note> notebook, String changeNameNote, String changeTextNote, int idNote) throws SQLException {
+    public void UpdateNote(upd type, String value, int idNote) throws SQLException {
 
         Statement SQL = connection.createStatement();
 
@@ -84,46 +81,32 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
         // Применение форматирования к текущей дате и времени
         String dt = currentDateTime.format(formatter);
 
-        SQL.execute("UPDATE notes set nameNote = '" + changeNameNote + "', textNote= '" + changeTextNote + "', dtChange= '" + dt + "' where id = " + idNote);
+        if(type== upd.text) {
+            SQL.execute("UPDATE notes set textNote = '" + value + "', dtChange= '" + dt + "' where id = " + idNote);
 
-        for (Note note : notebook) {
-            if (note.getId() == idNote) {
-                note.setNameNote(changeNameNote);
-                note.setTextNote(changeTextNote);
-                note.setDtChange(dt);
-                break;
+            for (Note note : notebook) {
+                if (note.getId() == idNote) {
+                    note.setTextNote(value);
+                    note.setDtChange(dt);
+                    break;
+                }
+
             }
-
         }
+        else if(type== upd.name){
+            SQL.execute("UPDATE notes set NameNote = '" + value + "', dtChange= '" + dt + "' where id = " + idNote);
 
-    }
+            for (Note note : notebook) {
+                if (note.getId() == idNote) {
+                    note.setNameNote(value);
+                    note.setDtChange(dt);
+                    break;
+                }
 
-    public void UpdateNoteName(List<Note> notebook, String changeNameNote, int idNote) throws SQLException {
-
-
-        Statement SQL = connection.createStatement();
-
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        // Создание объекта форматтера
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // Применение форматирования к текущей дате и времени
-        String dt = currentDateTime.format(formatter);
-
-        SQL.execute("UPDATE notes set nameNote = '" + changeNameNote + "',  dtChange= '" + dt + "' where id = " + idNote);
-
-        for (Note note : notebook) {
-            if (note.getId() == idNote) {
-                note.setNameNote(changeNameNote);
-                note.setDtChange(dt);
-                break;
             }
-
         }
-
     }
-
-    public void UpdateNoteText(List<Note> notebook, String changeTextNote, int idNote) throws SQLException {
-
+    public void UpdateNote(String name, String text, int idNote) throws SQLException {
 
         Statement SQL = connection.createStatement();
 
@@ -133,11 +116,12 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
         // Применение форматирования к текущей дате и времени
         String dt = currentDateTime.format(formatter);
 
-        SQL.execute("UPDATE notes set  textNote= '" + changeTextNote + "', dtChange= '" + dt + "' where id = " + idNote);
+        SQL.execute("UPDATE notes set nameNote = '" + name + "', textNote= '" + text + "', dtChange= '" + dt + "' where id = " + idNote);
 
         for (Note note : notebook) {
             if (note.getId() == idNote) {
-                note.setTextNote(changeTextNote);
+                note.setNameNote(name);
+                note.setTextNote(text);
                 note.setDtChange(dt);
                 break;
             }
@@ -151,7 +135,7 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
         notebook.removeIf(note -> note.getId() == idNote);
         Statement SQL = connection.createStatement();
         SQL.execute("DELETE FROM notes where id=" + idNote);
-
+        ReadNoteBase();
     }
 
     public void DrawNotes() {
@@ -230,4 +214,23 @@ public class NoteManager implements IReadNoteBase, IDrawNotes, INewNote, IDelete
             //Низ
         }
     }
+
+    public void NewNote(String noteName, String noteText) throws SQLException {
+
+
+        Statement SQL = connection.createStatement();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        // Создание объекта форматтера
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // Применение форматирования к текущей дате и времени
+        String dt = currentDateTime.format(formatter);
+
+
+        SQL.execute("INSERT INTO notes ( textNote, dtCreate, dtChange, nameNote) SELECT " + "'" + noteText + "', " + "'" + dt + "'" + ", " + "'" + dt + "', '" + noteName + "'");
+        ReadNoteBase();
+
+    }
+
+
+
 }

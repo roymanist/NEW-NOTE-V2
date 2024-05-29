@@ -10,5 +10,5 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface INewNote {
-    public  void NewNote( String noteName, String noteText, List<Note> notebook) throws SQLException ;
+    public  void NewNote( String noteName, String noteText) throws SQLException ;
 }

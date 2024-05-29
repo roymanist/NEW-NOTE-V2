@@ -1,0 +1,6 @@
+2024-05-29 12:20:47.865633+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "NOTES" not found (this database is empty); SQL statement:
+SELECT * FROM notes [42104-224]
+2024-05-29 12:21:37.831318+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "NOTES" not found (this database is empty); SQL statement:
+SELECT * FROM notes [42104-224]

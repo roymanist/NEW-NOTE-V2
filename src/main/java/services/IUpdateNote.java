@@ -8,14 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface IUpdateNote {
-    public  void UpdateNoteNameAndText(List<Note> notebook, String changeNameNote, String changeTextNote, int idNote) throws SQLException ;
+
+    public enum upd {
+        name,
+        text
+    };
+    public  void UpdateNote(upd type, String value, int idNote) throws SQLException ;
 
 
-    public  void UpdateNoteName(List<Note> notebook, String changeNameNote, int idNote) throws SQLException ;
-
-
-
-
-    public  void UpdateNoteText(List<Note> notebook, String changeTextNote, int idNote) throws SQLException ;
 
 }

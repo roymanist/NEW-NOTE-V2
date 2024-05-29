@@ -1,6 +1,8 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
-
+import java.net.URL;
 import services.*;
 import obj.*;
 
@@ -10,32 +12,11 @@ public class Main {
 
 NoteManager manager = NoteManager.getNoteData();
 
-manager.DrawNotes();
 
-       //Connection connection = DriverManager.getConnection("jdbc:h2:E:/JAVA_LRN/II/PROJ/src/main/java/dbase/NoteDBaseNew");
+        //manager.UpdateNote("Second Test","NEW TEST 4",11);
+        //manager.DeleteNote(14);
+        manager.DrawNotes();
 
-
-     /*   for(Note note : manager.getNotebook())
-        {
-            System.out.print(note.getId());
-            System.out.println(note.getNameNote());
-            System.out.println(note.getTextNote());
-        }
-*/
-
-
-
-        // notebook = manager.NewNote("Three","New Note 3", notebook);
-        // manager.DrawNotes(notebook);
-
-         //notebook = manager.DeleteNote(notebook,12);
-        //manager.DrawNotes(notebook);
-        //
-        //manager.UpdateNoteNameAndText( notebook, "YYYY", "ZZZZZZZZZZZ",1);
-        //manager.UpdateNoteName(notebook,"TestNote",1);
-        //manager.DrawNotes(notebook);
-
-        //  manager.DrawNotes(notebook);
 
     }
 }
